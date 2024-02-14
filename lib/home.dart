@@ -284,13 +284,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      //navigate to search page uding materrial page route
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //   builder: (context) => SearchResult(
-                      //     searchQuery: 'Search Query',
-                      //   ),
-                      // ));
-
                       //show dialogue with textfield to enter email address
                       showDialog(
                         context: context,
@@ -403,6 +396,7 @@ class _HomePageState extends State<HomePage> {
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('blockchain')
+                  .orderBy('date', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
