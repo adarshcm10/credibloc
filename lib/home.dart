@@ -1,3 +1,4 @@
+import 'package:credibloc/searchresult.dart';
 import 'package:flutter/material.dart';
 //import firestore
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -280,17 +282,99 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  Container(
-                    width: 50,
-                    height: 52,
-                    decoration: const ShapeDecoration(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Colors.white),
+                  GestureDetector(
+                    onTap: () {
+                      //navigate to search page uding materrial page route
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => SearchResult(
+                      //     searchQuery: 'Search Query',
+                      //   ),
+                      // ));
+
+                      //show dialogue with textfield to enter email address
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: const Color(0xff0D1D2E),
+                            title: const Text(
+                              'Search',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            content: TextField(
+                              controller: searchController,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.w300,
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Enter Email Address',
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Gotham',
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  //navigate to search page using material page route
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => SearchResult(
+                                      searchQuery: searchController.text,
+                                    ),
+                                  ));
+                                },
+                                child: const Text(
+                                  'Search',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 52,
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: Colors.white),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Image.asset('assets/search.png'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Image.asset('assets/search.png'),
+                      ),
                     ),
                   )
                 ],
