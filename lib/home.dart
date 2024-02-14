@@ -85,22 +85,39 @@ class _HomePageState extends State<HomePage> {
                             side: BorderSide(width: 1, color: Colors.white),
                           ),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 3),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 3),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                '12',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Gotham',
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('blockchain')
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      return const Text('Loading...');
+                                    default:
+                                      return Text(
+                                        '${snapshot.data?.docs.length}',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: 'Gotham',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      );
+                                  }
+                                },
                               ),
-                              Text(
+                              const Text(
                                 'Total Blocks',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -249,23 +266,39 @@ class _HomePageState extends State<HomePage> {
                             side: BorderSide(width: 1, color: Colors.white),
                           ),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 3),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10, top: 5),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                '145',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Gotham Black',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0.09,
-                                ),
+                              StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('userdata')
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  }
+
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      return const Text('Loading...');
+                                    default:
+                                      return Text(
+                                        '${snapshot.data?.docs.length}',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontFamily: 'Gotham',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      );
+                                  }
+                                },
                               ),
-                              Text(
+                              const Text(
                                 'Total Users',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
