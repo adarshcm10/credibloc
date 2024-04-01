@@ -497,7 +497,8 @@ class _HomePageState extends State<HomePage> {
                                                 symbol: '₹',
                                                 decimalDigits: 0,
                                               ).format(int.parse(
-                                                  document['amount'])),
+                                                  document['amount']
+                                                      .toString())),
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16,
